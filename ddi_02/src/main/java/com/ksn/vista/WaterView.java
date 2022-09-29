@@ -22,6 +22,10 @@ public class WaterView {
     
     public WaterController wc;
     
+    public WaterView(WaterController wc){
+        this.wc = wc;
+    }
+    
     public void initView(String[] args) {
                 ///////////////////////////////////// 1. FASE DE DEFINICIÓN
         // create Options object

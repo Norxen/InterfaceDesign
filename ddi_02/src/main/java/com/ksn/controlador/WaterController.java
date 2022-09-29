@@ -16,12 +16,12 @@ public class WaterController {
     private WaterModel wm;
     
     public WaterController() {
-        wv = new WaterView();
+        wv = new WaterView(this);
         wm = new WaterModel();
     }
     
     public static void main(String[] args) {
-        args = new String[]{"-b", "20"};
+        args = new String[]{"-s", "20"};
         WaterController wc = new WaterController();
         wc.getView().initView(args);
     }
