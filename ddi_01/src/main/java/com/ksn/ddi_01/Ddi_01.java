@@ -43,8 +43,6 @@ public class Ddi_01 {
                     if(cmd.hasOption("c"))
                         System.out.print(" cruel");
                 }
-//                NumberFormat myFormat = NumberFormat.getCurrencyInstance( Locale.UK );
-//                NumberValidator myValidator = new NumberValidator( myFormat );
                 if(cmd.hasOption("y")) {
                     System.out.println("Tras " + cmd.getOptionValue("y") + " años de vida");
                 }

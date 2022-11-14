@@ -4,30 +4,45 @@
  */
 package com.ksn.modelo;
 
+
+
 //Tank of water, this let you know the temperature at any point of the program.
 
 //It will be initialized as a random number between 0 - 100
 public class WaterModel {
     private int temperature;
+    private State state;
+    
+    public enum State {
+        NORMAL, BOILED, FROZEN;
+    }
     
     public WaterModel(){
-        temperature = (int) Math.floor(Math.random()*(101));
+        temperature = Math.round((float) Math.random()*(100));
     }
 
     public int getTemperature() {
         return temperature;
     }
-
-    public void setTemperature(int temperature) {
-        this.temperature = temperature;
+    
+    public void warmUp(int amount) {
+        temperature += amount;
+        setState();
     }
 
-    public int warmUp(int amount) {
-        return temperature + amount;
+    public void coolDown(int amount) {
+        temperature -= amount;
+        setState();
     }
-
-    public int coolDown(int amount) {
-        return temperature - amount;
+    
+    private void setState() {
+        if(temperature < 0) state = State.FROZEN;
+        else if(temperature > 100) state = State.BOILED;
+        else state = State.NORMAL;
+    }
+    
+    public State getState() {
+        return state;
     }
     
 }

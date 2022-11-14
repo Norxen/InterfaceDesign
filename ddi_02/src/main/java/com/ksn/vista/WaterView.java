@@ -30,14 +30,14 @@ public class WaterView {
                 ///////////////////////////////////// 1. FASE DE DEFINICIÓN
         // create Options object
         Options options = new Options();
-        Option oEur = Option.builder("s").hasArg()
+        Option oUp = Option.builder("s").hasArg()
                 .desc("Sube la temperatura x grados").build();
-        Option oPta = Option.builder("b").hasArg()
+        Option oDown = Option.builder("b").hasArg()
                 .desc("Baja la temperatura").build();
 
         OptionGroup group = new OptionGroup();
-        group.addOption(oEur);
-        group.addOption(oPta);
+        group.addOption(oUp);
+        group.addOption(oDown);
         options.addOptionGroup(group);
         options.addOption("h", "help", false, "display help");
 
@@ -52,15 +52,15 @@ public class WaterView {
                 HelpFormatter formatter = new HelpFormatter();
                 formatter.printHelp("time", options);
             } else {
-                if (cmd.hasOption("b")) {
+                if (cmd.hasOption(oUp)) {
                     int value = Integer.parseInt(
-                            cmd.getOptionValue("b"));
-                    wc.askForCoolDown(value);
-              
-                } else if (cmd.hasOption("s")) {
-                    int value = Integer.parseInt(
-                            cmd.getOptionValue("s"));
+                            cmd.getOptionValue(oUp));
                     wc.askForWarmUp(value);
+              
+                } else if (cmd.hasOption(oDown)) {
+                    int value = Integer.parseInt(
+                            cmd.getOptionValue(oDown));
+                    wc.askForCoolDown(value);
                 }
             }
 
@@ -78,16 +78,10 @@ public class WaterView {
     }
     
     public void showTemperature(int temperature){
-        System.out.println("La temperatura final del agua es " + temperature + ".");
+        System.out.println("La temperatura final del agua es " + temperature + "º.");
     }
-
-    public void updateResult(int temperature) {
-        if(temperature > 100){
-            showErrorOverheated();
-        }else if(temperature < 0){
-            showErrorSubCooled();
-        }else{
-            showTemperature(temperature);
-        }
+    
+    public void showInitialTemperature(int temperature) {
+        System.out.println("La temperatura inicial del agua es " + temperature + "º.");
     }
 }

@@ -5,6 +5,7 @@
 package com.ksn.controlador;
 
 import com.ksn.modelo.WaterModel;
+import com.ksn.modelo.WaterModel.State;
 import com.ksn.vista.WaterView;
 
 /**
@@ -12,8 +13,8 @@ import com.ksn.vista.WaterView;
  * @author norxe
  */
 public class WaterController {
-    private WaterView wv;
-    private WaterModel wm;
+    private final WaterView wv;
+    private final WaterModel wm;
     
     public WaterController() {
         wv = new WaterView(this);
@@ -21,8 +22,9 @@ public class WaterController {
     }
     
     public static void main(String[] args) {
-        args = new String[]{"-s", "20"};
+        args = new String[]{"-b", "20"};
         WaterController wc = new WaterController();
+        wc.getView().showInitialTemperature(wc.getModel().getTemperature());
         wc.getView().initView(args);
     }
 
@@ -35,13 +37,27 @@ public class WaterController {
     }
     
     public void askForWarmUp(int amount) {
-        int temperature = wm.warmUp(amount);
-        wv.updateResult(temperature);
+        wm.warmUp(amount);
+        askViewToShow(wm.getState());
     }
     
     public void askForCoolDown(int amount) {
-        int temperature = wm.coolDown(amount);
-        wv.updateResult(temperature);
+        wm.coolDown(amount);
+        askViewToShow(wm.getState());
+    }
+    
+    public void askViewToShow(State state) {
+        switch(state){
+            case NORMAL -> {
+                wv.showTemperature(wm.getTemperature());
+            }
+            case BOILED -> {
+                wv.showErrorOverheated();
+            }
+            case FROZEN -> {
+                wv.showErrorSubCooled();
+            }
+        }
     }
     
 }
